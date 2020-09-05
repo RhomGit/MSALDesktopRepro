@@ -88,26 +88,23 @@ namespace MSALTesting
             var stopWatch = new System.Diagnostics.Stopwatch();
             stopWatch.Start();
 
-            System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure.Start ");
+            System.Diagnostics.Debug.WriteLine($"Auth.Connect.Start ");
 
-            var accounts = await pca.GetAccountsAsync();
-
-            System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure.FirstAccount? @ {stopWatch.ElapsedMilliseconds / 1000}");
+            var accounts = await pca.GetAccountsAsync(); 
             var firstAccount = accounts.FirstOrDefault();
            
             try
             {
                 if (isSilent)
-                {
-                    System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure.AcquireTokenSilent @ {stopWatch.ElapsedMilliseconds / 1000}");
+                { 
                     authResult = await pca.AcquireTokenSilent(this.scopes, firstAccount).ExecuteAsync(); 
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure.SignOut @ {stopWatch.ElapsedMilliseconds / 1000}");
+                    System.Diagnostics.Debug.WriteLine($"Auth.Connect.SignOut @ {stopWatch.ElapsedMilliseconds / 1000}");
                     await SignOut();
 
-                    System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure.AcquireTokenInteractive @ {stopWatch.ElapsedMilliseconds / 1000}");
+                    System.Diagnostics.Debug.WriteLine($"Auth.Connect.AcquireTokenInteractive @ {stopWatch.ElapsedMilliseconds / 1000}");
                     authResult = await pca.AcquireTokenInteractive(this.scopes)
                         .WithUseEmbeddedWebView(true)
                         .WithLoginHint(previousSignInName)
@@ -115,17 +112,17 @@ namespace MSALTesting
                         .WithParentActivityOrWindow(parentActivity)
                         .WithPrompt(Prompt.SelectAccount)
                         .ExecuteAsync();
-                    System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure.AcquireTokenInteractive Success @ {stopWatch.ElapsedMilliseconds / 1000}");
+                    System.Diagnostics.Debug.WriteLine($"Auth.Connect.AcquireTokenInteractive Success @ {stopWatch.ElapsedMilliseconds / 1000}");
                 }
             }
             catch (MsalUiRequiredException exMsal)
             {
-                System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure.exMsal @ {stopWatch.ElapsedMilliseconds / 1000}");
+                System.Diagnostics.Debug.WriteLine($"Auth.Connect.exMsal @ {stopWatch.ElapsedMilliseconds / 1000}");
                 throw exMsal;
             }
             catch (Microsoft.Identity.Client.MsalServiceException exMsal2)
             {
-                System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure.exMsal2 @ {stopWatch.ElapsedMilliseconds / 1000}");
+                System.Diagnostics.Debug.WriteLine($"Auth.Connect.exMsal2 @ {stopWatch.ElapsedMilliseconds / 1000}");
                 if (exMsal2.Message.Contains("AADB2C90118") == true) //The user has forgotten their password.
                     await ResetPassword(AuthB2C);
                 else if (exMsal2.Message.Contains("AADB2C90091") == true) //The user has cancelled entering self-asserted information.)
@@ -136,7 +133,7 @@ namespace MSALTesting
             catch (Microsoft.Identity.Client.MsalClientException exMsal3)
             {
                 // just cancelled, ignore?
-                System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure.exMsal3 @ {stopWatch.ElapsedMilliseconds / 1000}");
+                System.Diagnostics.Debug.WriteLine($"Auth.Connect.exMsal3 @ {stopWatch.ElapsedMilliseconds / 1000}");
                 Debug.WriteLine(exMsal3.ToString());
                 return false;
             }
@@ -146,7 +143,7 @@ namespace MSALTesting
             }
             finally
             {
-                System.Diagnostics.Debug.WriteLine($"B2i.MSALInterop.Auth.ConnectToAzure took {stopWatch.ElapsedMilliseconds / 1000} seconds");
+                System.Diagnostics.Debug.WriteLine($"Auth.Connect took {stopWatch.ElapsedMilliseconds / 1000} seconds");
             }
 
             // if we get this far, we have validated succesfully, set up the creds and decode the user claims
