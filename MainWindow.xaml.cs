@@ -1,5 +1,4 @@
-﻿using B2i.MSALInterop; 
-using System.Windows; 
+﻿using System.Windows; 
 
 namespace MSALTesting
 { 
