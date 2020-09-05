@@ -1,0 +1,69 @@
+﻿<Window x:Class="MSALTesting.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MSALTesting"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        
+        <Grid HorizontalAlignment="Left" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0">Client Id</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding clientId}" MinWidth="200" />
+            <Label Grid.Row="0" Grid.Column="2" Foreground="DarkGray">e.g. 31f31132-0123-1111-2222-aaa999332311</Label>
+
+            <Label Grid.Row="1">Tenant</Label>
+            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding tenant}" MinWidth="200" />
+            <Label Grid.Row="1" Grid.Column="2" Foreground="DarkGray">e.g. MyB2CTenant.onmicrosoft.com</Label>
+
+            <Label Grid.Row="3">Policy - Edit</Label>
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PolicyEditProfile}" MinWidth="200" />
+            <Label Grid.Row="3" Grid.Column="2" Foreground="DarkGray">e.g. B2C_1_edit_profile</Label>
+
+            <Label Grid.Row="4">Policy - Reset</Label>
+            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding PolicyResetPassword}" MinWidth="200" />
+            <Label Grid.Row="4" Grid.Column="2" Foreground="DarkGray">e.g. B2C_1_Reset</Label>
+
+            <Label Grid.Row="5">Policy - SignUpSignIn</Label>
+            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PolicySignUpSignIn}" MinWidth="200" />
+            <Label Grid.Row="5" Grid.Column="2" Foreground="DarkGray">e.g. B2C_1_SignUpOrIn</Label>
+
+
+            <Label Grid.Row="2">AzureADB2CHostname</Label>
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AzureADB2CHostname}" MinWidth="200" />
+            <Label Grid.Row="2" Grid.Column="2" Foreground="DarkGray">e.g. MyB2CTenant.b2clogin.com or login.microsoftonline.com</Label>
+            
+            <Label Grid.Row="6">Previous Sign In Name</Label>
+            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding previousSignInName}" MinWidth="200" />
+            <Label Grid.Row="6" Grid.Column="2" Foreground="DarkGray">e.g. name@somewhere.com (optional, just for login hint)</Label>
+        </Grid>
+
+        <StackPanel HorizontalAlignment="Left" Grid.Column="1">
+            <Button x:Name="btn1" Click="btn1_Click">Create Auth</Button>
+            <Button x:Name="btn2" Click="btn2_Click">Silent</Button>
+            <Button x:Name="btn3" Click="btn3_Click">Interactive</Button>
+            <Button x:Name="btn4" Click="btn4_Click">Edit Profile</Button>
+            <Button x:Name="btn5" Click="btn5_Click">Reset Password</Button>
+        </StackPanel>
+    </Grid>
+</Window>
