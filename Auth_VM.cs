@@ -152,7 +152,7 @@ namespace MSALTesting
 
         public Auth_VM()
         {
-            this.clientId = "";
+            this.clientId = "111";
             this.tenant = "MyB2CTenant.onmicrosoft.com";
             this.AzureADB2CHostname = "MyB2CTenant.b2clogin.com";
             this.PolicyEditProfile = "B2C_1_edit_profile2";

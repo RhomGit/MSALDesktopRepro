@@ -64,6 +64,7 @@
             <Button x:Name="btn3" Click="btn3_Click">Interactive</Button>
             <Button x:Name="btn4" Click="btn4_Click">Edit Profile</Button>
             <Button x:Name="btn5" Click="btn5_Click">Reset Password</Button>
+            <Button x:Name="btn6" Click="btn6_Click">Sign Out</Button>
         </StackPanel>
     </Grid>
 </Window>

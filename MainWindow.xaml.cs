@@ -17,13 +17,22 @@ namespace MSALTesting
         {
             var vm = (Auth_VM)this.DataContext;
             auth = new Auth(vm, Auth.AppPlatform.DesktopClient, vm.clientId, null);
+            MessageBox.Show("Auth created");
         }
 
         private async void btn2_Click(object sender, RoutedEventArgs e)
         {
             // silent
             var vm = (Auth_VM)this.DataContext;
-            await auth.Connect(vm, true, vm.previousSignInName);
+            try
+            {
+                await auth.Connect(vm, true, vm.previousSignInName);
+            }
+            catch (System.Exception)
+            {
+                // do nothing, we are silent
+                MessageBox.Show("Silent fail.");
+            }
         }
 
         private async void btn3_Click(object sender, RoutedEventArgs e)
@@ -43,6 +52,12 @@ namespace MSALTesting
         {
             var vm = (Auth_VM)this.DataContext;
             await auth.ResetPassword(vm);
+        }
+
+        private async void btn6_Click(object sender, RoutedEventArgs e)
+        {
+            await auth.SignOut();
+            MessageBox.Show("Signed out");
         }
     }
 }
