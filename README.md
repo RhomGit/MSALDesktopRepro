@@ -1,4 +1,4 @@
-# A simple C# WPF repro for testing MSAL B2C auth and getting a bearer token.
+# A simple C# WPF repro for testing MSAL Azure B2C auth and getting a bearer token.
 
 Update the constructor in Auth_VM.cs with your B2C params.
 
