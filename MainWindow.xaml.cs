@@ -1,4 +1,5 @@
-﻿using System.Windows; 
+﻿using System.Threading.Tasks;
+using System.Windows; 
 
 namespace MSALTesting
 { 
@@ -11,12 +12,12 @@ namespace MSALTesting
             this.DataContext = new Auth_VM();
         }
 
-        Auth auth; 
 
-        private void btn1_Click(object sender, RoutedEventArgs e)
+
+        private async void btn1_Click(object sender, RoutedEventArgs e)
         {
             var vm = (Auth_VM)this.DataContext;
-            auth = new Auth(vm, Auth.AppPlatform.DesktopClient, vm.clientId, null);
+            await vm.CreateAuth();
             MessageBox.Show("Auth created");
         }
 
@@ -26,7 +27,7 @@ namespace MSALTesting
             var vm = (Auth_VM)this.DataContext;
             try
             {
-                await auth.Connect(vm, true, vm.previousSignInName);
+                await vm.GetAuthResult(true); 
             }
             catch (System.Exception)
             {
@@ -39,24 +40,38 @@ namespace MSALTesting
         {
             // interactive
             var vm = (Auth_VM)this.DataContext;
-            await auth.Connect(vm, false, vm.previousSignInName);
+            try
+            {
+                await vm.GetAuthResult(false);
+            }
+            catch (System.Exception)
+            {
+                // do nothing, we are silent
+                MessageBox.Show("Silent fail.");
+            }
         }
 
         private async void btn4_Click(object sender, RoutedEventArgs e)
         {
             var vm = (Auth_VM)this.DataContext;
-            await auth.EditProfile(vm);
+            await vm.auth.EditProfile(vm);
         }
 
         private async void btn5_Click(object sender, RoutedEventArgs e)
         {
             var vm = (Auth_VM)this.DataContext;
-            await auth.ResetPassword(vm);
+            await vm.auth.ResetPassword(vm);
         }
 
         private async void btn6_Click(object sender, RoutedEventArgs e)
         {
-            await auth.SignOut();
+            var vm = (Auth_VM)this.DataContext;
+            if (vm is null || vm.auth is null)
+            {
+                MessageBox.Show("Auth is null, no need to sign out");
+                return;
+            }
+            await vm.auth.SignOut();
             MessageBox.Show("Signed out");
         }
     }

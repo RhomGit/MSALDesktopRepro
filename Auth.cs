@@ -23,7 +23,7 @@ namespace MSALTesting
         public IPublicClientApplication pca = null; 
         public UserFromClaims userFromClaims;
         public string[] scopes = null;
-
+        public string RedirectUri;
 
         public enum AppPlatform
         {
@@ -41,24 +41,24 @@ namespace MSALTesting
             return s;
         }
 
-        public Auth(Auth_VM AuthB2C, AppPlatform platform, string clientId, object parentActivity)
+        public Auth(string Authority, AppPlatform platform, string clientId, string[] scopes, object parentActivity)
         {
             this.appPlatform = platform;
-            this.clientId = AuthB2C.clientId;
+            this.clientId = clientId;
             this.parentActivity = parentActivity;
-            this.scopes = Auth_VM.GetScopes(AuthB2C.api_scopes_uri);
+            this.scopes = scopes;
 
             string userDir = MyDocumentsRoot() + @"\";
-            string RedirectUri = $@"msal{this.clientId}://auth";
+
+            this.RedirectUri = $@"msal{this.clientId}://auth";
 
             this.pca = PublicClientApplicationBuilder.Create(this.clientId)
-                .WithB2CAuthority(AuthB2C.Authority)
-                .WithIosKeychainSecurityGroup("com.microsoft.msalrocks")
+                .WithB2CAuthority(Authority)
                 .WithRedirectUri(RedirectUri)
                 .Build();
 
             Debug.WriteLine($@"Creating auth context with:
-            B2C authority: {AuthB2C.Authority}
+            B2C authority: {Authority}
             Client id: {this.clientId}
             Redirect uri: {RedirectUri}");
             if (this.scopes is null)
@@ -157,24 +157,15 @@ namespace MSALTesting
         { 
             try
             {
-                // var accounts = await pca.GetAccountsAsync(AuthB2C.PolicyEditProfile);
-                // var account = accounts.FirstOrDefault();
-
                 var accounts = await pca.GetAccountsAsync();
                 var account = Helpers.GetAccountByPolicy(accounts, AuthB2C.PolicyEditProfile);
 
-                // KNOWN ISSUE:
-                // User will get prompted 
-                // to pick an IdP again.
-
-
-                // https://github.com/Azure-Samples/active-directory-b2c-xamarin-native/issues/35
                 var ar = await pca.AcquireTokenInteractive(this.scopes)
-    .WithAccount(account)
-    .WithB2CAuthority(AuthB2C.AuthorityEditProfile)
-    .WithParentActivityOrWindow(parentActivity)
-    .WithPrompt(Prompt.NoPrompt)
-    .ExecuteAsync();
+                    .WithAccount(account)
+                    .WithB2CAuthority(AuthB2C.AuthorityEditProfile)
+                    .WithParentActivityOrWindow(parentActivity)
+                    .WithPrompt(Prompt.NoPrompt)
+                    .ExecuteAsync();
             }
             catch (Exception ex)
             {
@@ -187,7 +178,6 @@ namespace MSALTesting
         {
             try
             {
-                // AuthenticationResult ar = await pca.AcquireTokenAsync(AuthB2C.scopes, (IAccount)null, Prompt.SelectAccount, string.Empty, null, AuthB2C.AuthorityResetPassword, this.parentActivity);
                 var accounts = await pca.GetAccountsAsync();
                 var account = Helpers.GetAccountByPolicy(accounts, AuthB2C.AuthorityResetPassword);
 

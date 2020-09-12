@@ -5,66 +5,136 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MSALTesting"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        
-        <Grid HorizontalAlignment="Left" Grid.Column="0">
+        Title="MainWindow" Height="550" Width="1300">
+    <Window.Resources>
+        <Style TargetType="Rectangle">
+            <Setter Property="Height" Value="1" />
+            <Setter Property="Fill"  Value="DarkGray" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="10" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Width" Value="450" />
+        </Style>
+    </Window.Resources> 
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
 
-            <Label Grid.Row="0">Client Id</Label>
-            <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding clientId}" MinWidth="200" />
-            <Label Grid.Row="0" Grid.Column="2" Foreground="DarkGray">e.g. 31f31132-0123-1111-2222-aaa999332311</Label>
+            <StackPanel>
+                <Label FontWeight="SemiBold">Basic B2C Auth</Label>
+                <Grid HorizontalAlignment="Left" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
 
-            <Label Grid.Row="1">Tenant</Label>
-            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding tenant}" MinWidth="200" />
-            <Label Grid.Row="1" Grid.Column="2" Foreground="DarkGray">e.g. MyB2CTenant.onmicrosoft.com</Label>
+                    <Label Grid.Row="0">App Client Id</Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding clientId}" MinWidth="200" />
+                    <Label Grid.Row="0" Grid.Column="2" Foreground="DarkGray">e.g. 31f31132-0123-1111-2222-aaa999332311</Label>
 
-            <Label Grid.Row="3">Policy - Edit</Label>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PolicyEditProfile}" MinWidth="200" />
-            <Label Grid.Row="3" Grid.Column="2" Foreground="DarkGray">e.g. B2C_1_edit_profile</Label>
+                    <Label Grid.Row="1">Tenant</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding tenant}" MinWidth="200" />
+                    <Label Grid.Row="1" Grid.Column="2" Foreground="DarkGray">e.g. MyB2CTenant.onmicrosoft.com</Label>
 
-            <Label Grid.Row="4">Policy - Reset</Label>
-            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding PolicyResetPassword}" MinWidth="200" />
-            <Label Grid.Row="4" Grid.Column="2" Foreground="DarkGray">e.g. B2C_1_Reset</Label>
+                    <Label Grid.Row="3">Policy - Edit</Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PolicyEditProfile}" MinWidth="200" />
+                    <Label Grid.Row="3" Grid.Column="2" Foreground="DarkGray">e.g. B2C_1_edit_profile</Label>
 
-            <Label Grid.Row="5">Policy - SignUpSignIn</Label>
-            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PolicySignUpSignIn}" MinWidth="200" />
-            <Label Grid.Row="5" Grid.Column="2" Foreground="DarkGray">e.g. B2C_1_SignUpOrIn</Label>
+                    <Label Grid.Row="4">Policy - Reset</Label>
+                    <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding PolicyResetPassword}" MinWidth="200" />
+                    <Label Grid.Row="4" Grid.Column="2" Foreground="DarkGray">e.g. B2C_1_Reset</Label>
+
+                    <Label Grid.Row="5">Policy - SignUpSignIn</Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PolicySignUpSignIn}" MinWidth="200" />
+                    <Label Grid.Row="5" Grid.Column="2" Foreground="DarkGray">e.g. B2C_1_SignUpOrIn</Label>
 
 
-            <Label Grid.Row="2">AzureADB2CHostname</Label>
-            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AzureADB2CHostname}" MinWidth="200" />
-            <Label Grid.Row="2" Grid.Column="2" Foreground="DarkGray">e.g. MyB2CTenant.b2clogin.com or login.microsoftonline.com</Label>
+                    <Label Grid.Row="2">AzureADB2CHostname</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding AzureADB2CHostname}" MinWidth="200" />
+                    <Label Grid.Row="2" Grid.Column="2" Foreground="DarkGray">e.g. MyB2CTenant.b2clogin.com or the (deprecated) login.microsoftonline.com</Label>
             
-            <Label Grid.Row="6">Previous Sign In Name</Label>
-            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding previousSignInName}" MinWidth="200" />
-            <Label Grid.Row="6" Grid.Column="2" Foreground="DarkGray">e.g. name@somewhere.com (optional, just for login hint)</Label>
-        </Grid>
+                    <Label Grid.Row="6">Previous Sign In Name</Label>
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding previousSignInName}" MinWidth="200" />
+                    <Label Grid.Row="6" Grid.Column="2" Foreground="DarkGray">e.g. name@somewhere.com (optional, just for login hint)</Label>
+                </Grid>
 
-        <StackPanel HorizontalAlignment="Left" Grid.Column="1">
-            <Button x:Name="btn1" Click="btn1_Click">Create Auth</Button>
-            <Button x:Name="btn2" Click="btn2_Click">Silent</Button>
-            <Button x:Name="btn3" Click="btn3_Click">Interactive</Button>
-            <Button x:Name="btn4" Click="btn4_Click">Edit Profile</Button>
-            <Button x:Name="btn5" Click="btn5_Click">Reset Password</Button>
-            <Button x:Name="btn6" Click="btn6_Click">Sign Out</Button>
+                
+                <!-- divider-->
+                <Rectangle Height="1" Fill="DarkGray" VerticalAlignment="Center" />
+                <Label FontWeight="SemiBold">Request Access to Resource (optional):</Label>
+
+                <Grid HorizontalAlignment="Left" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0">API resource</Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding api_string}" MinWidth="200" TextWrapping="Wrap" />
+                    <Label Grid.Row="0" Grid.Column="2" Foreground="DarkGray">e.g. 42f31132-0123-444-666-bbb999332388</Label>
+
+                    <Label Grid.Row="1">Requested scopes</Label>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding scopes_string}" MinWidth="200" TextWrapping="Wrap" IsEnabled="False" />
+                    <Label Grid.Row="1" Grid.Column="2" Foreground="DarkGray">derived from tenant &amp; api resource, hard coded to read/write</Label>
+
+                    <Label Grid.Row="2">Redirect uri</Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding redirect_uri}" MinWidth="200" TextWrapping="Wrap" IsEnabled="False" />
+                    <StackPanel Grid.Row="2" Grid.Column="2">
+                        <TextBlock Margin="2,0" Foreground="DarkGray">e.g. msal11111-2222-4064-9bde-911236220fd9://auth</TextBlock>
+                        <TextBlock Margin="2,0" Foreground="DarkGray">The API needs to have an entry for this in its App Registrations, Authentication</TextBlock>
+                    </StackPanel>
+                    
+ 
+                </Grid>
+                
+                <!-- divider-->
+                <Rectangle Height="1" Fill="DarkGray" VerticalAlignment="Center" />
+                <Label FontWeight="SemiBold">Auth Result:</Label>
+
+                <Grid HorizontalAlignment="Left" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Row="0">Bearer token</Label>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding bearer_token}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
+                    <Label Grid.Row="0" Grid.Column="2" Foreground="DarkGray">check it in jwt.ms</Label>
+                </Grid>
         </StackPanel>
-    </Grid>
+
+
+            <StackPanel HorizontalAlignment="Left" Grid.Column="1">
+                <Button x:Name="btn1" Click="btn1_Click">Create Auth</Button>
+                <Button x:Name="btn2" Click="btn2_Click">Silent</Button>
+                <Button x:Name="btn3" Click="btn3_Click">Interactive</Button>
+                <Button x:Name="btn4" Click="btn4_Click">Edit Profile</Button>
+                <Button x:Name="btn5" Click="btn5_Click">Reset Password</Button>
+                <Button x:Name="btn6" Click="btn6_Click">Sign Out</Button>
+            </StackPanel> 
+        </Grid> 
 </Window>

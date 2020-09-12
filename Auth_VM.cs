@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MSALTesting
 {
     public class Auth_VM : INotifyPropertyChanged
     {
+        #region Properties / Bindings
         public event PropertyChangedEventHandler PropertyChanged;
-
-        string _api_scopes_uri; // derived from tenant 
-        public string api_scopes_uri
+        protected void RaisePropertyChanged(string propName)
         {
-            get
-            {
-                return _api_scopes_uri;
-            }
-            set
-            {
-                _api_scopes_uri = value;
-                RaisePropertyChanged(nameof(api_scopes_uri));
-            }
+            if (PropertyChanged is null)
+                return;
+
+            PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
 
         string _clientId;
@@ -73,7 +69,6 @@ namespace MSALTesting
             set
             {
                 _tenant = value;
-                api_scopes_uri = $"https://{tenant}/";
                 RaisePropertyChanged(nameof(tenant));
             }
         }
@@ -149,28 +144,109 @@ namespace MSALTesting
             }
         }
 
+        string _api_string;
+        public string api_string
+        {
+            get
+            {
+                return _api_string;
+            }
+            set
+            {
+                _api_string = value;
+                RaisePropertyChanged(nameof(api_string));
+            }
+        }
+
+        string _bearer_token;
+        public string bearer_token
+        {
+            get
+            {
+                return _bearer_token;
+            }
+            set
+            {
+                _bearer_token = value;
+                RaisePropertyChanged(nameof(bearer_token));
+            }
+        }
+
+        string _redirect_uri;
+        public string redirect_uri
+        {
+            get
+            {
+                return _redirect_uri;
+            }
+            set
+            {
+                _redirect_uri = value;
+                RaisePropertyChanged(nameof(redirect_uri));
+            }
+        }
+    
+        string _scopes_string;
+        public string scopes_string
+        {
+            get
+            {
+                return _scopes_string;
+            }
+            set
+            {
+                _scopes_string = value;
+                RaisePropertyChanged(nameof(scopes_string));
+            }
+        }
+        #endregion
+
+        public Auth auth { get; private set; }
 
         public Auth_VM()
         {
-            this.clientId = "111";
+            this.clientId = "";
             this.tenant = "MyB2CTenant.onmicrosoft.com";
-            this.AzureADB2CHostname = "MyB2CTenant.b2clogin.com";
+            this.AzureADB2CHostname = "MyB2CTenant.b2clogin.com"; // login.microsoftonline.com is deprecated, ref: https://docs.microsoft.com/en-us/azure/active-directory-b2c/b2clogin
             this.PolicyEditProfile = "B2C_1_edit_profile2";
             this.PolicyResetPassword = "B2C_1_Reset";
             this.PolicySignUpSignIn = "B2C_1_SignUpOrIn";
+
+            this.api_string = "";
         }
 
-        public static string[] GetScopes(string api_scopes_uri)
+
+        public async Task CreateAuth()
         {
+            auth = new Auth(this.Authority, Auth.AppPlatform.DesktopClient, this.clientId, GetScopes(this.tenant, this.api_string), null);
+
+            this.bearer_token = "";
+            this.redirect_uri = auth.RedirectUri;
+
+            if (auth.scopes is null)
+                this.scopes_string = "** Scopes are NULL **";
+            else 
+                scopes_string = string.Join(Environment.NewLine, auth.scopes);
+
+
+        }
+        public async Task GetAuthResult(bool silently)
+        {
+            this.bearer_token = "";
+            await this.auth.Connect(this, silently, this.previousSignInName);
+            if (auth.authResult is null)
+                return;
+
+            this.bearer_token = auth.authResult.IdToken;
+        }
+
+        public static string[] GetScopes(string tenant, string api_string) 
+        {
+            string api_scopes_uri = $"https://{tenant}/{api_string}/";
+
             return new string[] { api_scopes_uri + "read", api_scopes_uri + "write" };
         }
 
-        protected void RaisePropertyChanged(string propName)
-        {
-            if (PropertyChanged is null)
-                return;
-
-            PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        }
+        
     }
 }
