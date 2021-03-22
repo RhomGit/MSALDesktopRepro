@@ -172,6 +172,34 @@ namespace MSALTesting
             }
         }
 
+        string _expiresOn;
+        public string expiresOn
+        {
+            get
+            {
+                return _expiresOn;
+            }
+            set
+            {
+                _expiresOn = value;
+                RaisePropertyChanged(nameof(expiresOn));
+            }
+        }
+
+        string _extendedExpiresOn;
+        public string extendedExpiresOn
+        {
+            get
+            {
+                return _extendedExpiresOn;
+            }
+            set
+            {
+                _extendedExpiresOn = value;
+                RaisePropertyChanged(nameof(extendedExpiresOn));
+            }
+        }
+
         string _redirect_uri;
         public string redirect_uri
         {
@@ -238,6 +266,9 @@ namespace MSALTesting
                 return;
 
             this.bearer_token = auth.authResult.IdToken;
+            this.expiresOn = $"{auth.authResult.ExpiresOn.DateTime.ToLongDateString()} - {auth.authResult.ExpiresOn.DateTime.ToLongTimeString()} ";
+            this.extendedExpiresOn = $"{auth.authResult.ExtendedExpiresOn.DateTime.ToLongDateString()} - {auth.authResult.ExpiresOn.DateTime.ToLongTimeString()} ";
+            
         }
 
         public static string[] GetScopes(string tenant, string api_string) 

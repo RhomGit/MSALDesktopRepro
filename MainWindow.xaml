@@ -121,10 +121,21 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                     <Label Grid.Row="0">Bearer token</Label>
                     <TextBox Background="#EEEEEE" Grid.Row="0" Grid.Column="1" Text="{Binding bearer_token}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
                     <Label Grid.Row="0" Grid.Column="2" Foreground="DarkGray">check it in jwt.ms</Label>
-                </Grid>
+                <Label Grid.Row="1">Expires On</Label>
+                <TextBox Background="#EEEEEE" Grid.Row="1" Grid.Column="1" Text="{Binding expiresOn}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
+                <Label Grid.Row="1" Grid.Column="2" Foreground="DarkGray"></Label>
+                <Label Grid.Row="2">Expires On (Extended)</Label>
+                <TextBox Background="#EEEEEE" Grid.Row="2" Grid.Column="1" Text="{Binding extendedExpiresOn}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
+                <Label Grid.Row="2" Grid.Column="2" Foreground="DarkGray"></Label>
+            </Grid>
         </StackPanel>
 
 
