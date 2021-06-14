@@ -90,7 +90,18 @@ namespace MSALTesting
 
             System.Diagnostics.Debug.WriteLine($"Auth.Connect.Start ");
 
-            var accounts = await pca.GetAccountsAsync(); 
+            var accounts = await pca.GetAccountsAsync();
+
+            if (accounts != null && accounts.Count() > 1)
+            {
+                System.Windows.MessageBox.Show("Multiple cached accounts discovered");
+                foreach (var item in accounts)
+                {
+                    System.Diagnostics.Debug.WriteLine($" - {item.ToString()}");
+                }
+            }
+            
+
             var firstAccount = accounts.FirstOrDefault();
            
             try
