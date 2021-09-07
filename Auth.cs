@@ -54,6 +54,7 @@ namespace MSALTesting
 
             this.pca = PublicClientApplicationBuilder.Create(this.clientId)
                 .WithB2CAuthority(Authority)
+                .WithLogging(CustomLoggingMethod, LogLevel.Info, enablePiiLogging: true, enableDefaultPlatformLogging: true)
                 .WithRedirectUri(RedirectUri)
                 .Build();
 
@@ -163,7 +164,7 @@ namespace MSALTesting
 
             return true;
         }
-         
+        
         public async Task EditProfile(Auth_VM AuthB2C)
         { 
             try
@@ -205,7 +206,6 @@ namespace MSALTesting
                     throw ex;
             }
         }
-
         public async Task SignOut()
         { 
             var accounts = await pca.GetAccountsAsync();
@@ -215,6 +215,11 @@ namespace MSALTesting
             }
             this.authResult = null; //reset this
 
+        }
+
+        void CustomLoggingMethod(LogLevel level, string message, bool containsPii)
+        {
+            Console.WriteLine($"MSAL {level} {containsPii} {message}");
         }
     }
 }

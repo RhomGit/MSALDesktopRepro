@@ -239,7 +239,6 @@ namespace MSALTesting
             this.PolicyEditProfile = "B2C_1_edit_profile2";
             this.PolicyResetPassword = "B2C_1_Reset";
             this.PolicySignUpSignIn = "B2C_1_SignUpOrIn";
-
             this.api_string = "";
         }
 
