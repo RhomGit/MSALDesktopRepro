@@ -158,17 +158,31 @@ namespace MSALTesting
             }
         }
 
-        string _bearer_token;
-        public string bearer_token
+        string _access_token;
+        public string access_token
         {
             get
             {
-                return _bearer_token;
+                return _access_token;
             }
             set
             {
-                _bearer_token = value;
-                RaisePropertyChanged(nameof(bearer_token));
+                _access_token = value;
+                RaisePropertyChanged(nameof(access_token));
+            }
+        }
+
+        string _id_token;
+        public string id_token
+        {
+            get
+            {
+                return _id_token;
+            }
+            set
+            {
+                _id_token = value;
+                RaisePropertyChanged(nameof(id_token));
             }
         }
 
@@ -247,7 +261,8 @@ namespace MSALTesting
         {
             auth = new Auth(this.Authority, Auth.AppPlatform.DesktopClient, this.clientId, GetScopes(this.tenant, this.api_string), null);
 
-            this.bearer_token = "";
+            this.access_token = "";
+            this.id_token = "";
             this.redirect_uri = auth.RedirectUri;
 
             if (auth.scopes is null)
@@ -259,12 +274,14 @@ namespace MSALTesting
         }
         public async Task GetAuthResult(bool silently)
         {
-            this.bearer_token = "";
+            this.access_token = "";
+            this.id_token = "";
             await this.auth.Connect(this, silently, this.previousSignInName);
             if (auth.authResult is null)
                 return;
 
-            this.bearer_token = auth.authResult.IdToken;
+            this.access_token = auth.authResult.AccessToken;
+            this.id_token = auth.authResult.IdToken;
             this.expiresOn = $"{auth.authResult.ExpiresOn.DateTime.ToLongDateString()} - {auth.authResult.ExpiresOn.DateTime.ToLongTimeString()} ";
             this.extendedExpiresOn = $"{auth.authResult.ExtendedExpiresOn.DateTime.ToLongDateString()} - {auth.authResult.ExpiresOn.DateTime.ToLongTimeString()} ";
             

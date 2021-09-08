@@ -5,8 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MSALTesting"
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="1300">
+        Title="MainWindow" Height="580" Width="1300">
     <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="1" />
+            <Setter Property="Padding" Value="6,3" />
+        </Style>
         <Style TargetType="Rectangle">
             <Setter Property="Height" Value="1" />
             <Setter Property="Fill"  Value="DarkGray" />
@@ -125,19 +129,25 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                    <Label Grid.Row="0">Bearer token</Label>
-                    <TextBox Background="#EEEEEE" Grid.Row="0" Grid.Column="1" Text="{Binding bearer_token}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
-                    <Label Grid.Row="0" Grid.Column="2" Foreground="DarkGray">check it in jwt.ms</Label>
-                <Label Grid.Row="1">Expires On</Label>
-                <TextBox Background="#EEEEEE" Grid.Row="1" Grid.Column="1" Text="{Binding expiresOn}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
-                <Label Grid.Row="1" Grid.Column="2" Foreground="DarkGray"></Label>
-                <Label Grid.Row="2">Expires On (Extended)</Label>
-                <TextBox Background="#EEEEEE" Grid.Row="2" Grid.Column="1" Text="{Binding extendedExpiresOn}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
+                <Label Grid.Row="0">Access token</Label>
+                <TextBox Background="#EEEEEE" Grid.Row="0" Grid.Column="1" Text="{Binding access_token}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
+                <Label Grid.Row="0" Grid.Column="2" Foreground="DarkGray">check it in jwt.ms</Label>
+                    
+                <Label Grid.Row="1">id token</Label>
+                <TextBox Background="#EEEEEE" Grid.Row="1" Grid.Column="1" Text="{Binding id_token}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
+                <Label Grid.Row="1" Grid.Column="2" Foreground="DarkGray">(this token won't have scopes)</Label>
+                    
+                <Label Grid.Row="2">Expires On</Label>
+                <TextBox Background="#EEEEEE" Grid.Row="2" Grid.Column="1" Text="{Binding expiresOn}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
                 <Label Grid.Row="2" Grid.Column="2" Foreground="DarkGray"></Label>
+                    
+                <Label Grid.Row="3">Expires On (Extended)</Label>
+                <TextBox Background="#EEEEEE" Grid.Row="3" Grid.Column="1" Text="{Binding extendedExpiresOn}" MinWidth="200" IsEnabled="True" IsReadOnly="True" />
+                <Label Grid.Row="3" Grid.Column="3" Foreground="DarkGray"></Label>
             </Grid>
         </StackPanel>
-
 
             <StackPanel HorizontalAlignment="Left" Grid.Column="1">
                 <Button x:Name="btn1" Click="btn1_Click">Create Auth</Button>
